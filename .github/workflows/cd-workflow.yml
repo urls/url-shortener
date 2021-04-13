@@ -72,6 +72,5 @@ jobs:
         username: ${{github.actor}}
         password: ${{secrets.DOCKER_PASSWORD}}
         registry: docker.pkg.github.com
-        context: .
-        push: true
-        tags: user/app:latest
+        repository: urls/url-shortener
+        tag_with_sha: true
