@@ -62,7 +62,10 @@ jobs:
         name: mvn artifacts
         path: target
     - name: see file content
-      run: ls -ltr
+      run: |
+        ls -ltr
+        cd target
+        ls -ltr
     - name: Build container image
       uses: docker/build-push-action@v1
       with:
