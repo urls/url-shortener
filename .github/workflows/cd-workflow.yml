@@ -56,18 +56,22 @@ jobs:
     name: Docker Build, Tag, Push
 
     steps:
+    
     - name: Checkout
       uses: actions/checkout@v2
+
     - name: Download built artifact
       uses: actions/download-artifact@main
       with:
         name: mvn artifacts
         path: target
+
     - name: Build container image
-      uses: docker/build-push-action@v1
+      uses: docker/build-push-action@v2
       with:
         username: ${{github.actor}}
         password: ${{secrets.DOCKER_PASSWORD}}
         registry: docker.pkg.github.com
-        repository: urls/url-shortener/url-shortener
-        tag_with_sha: true
+        context: .
+        push: true
+        tags: user/app:latest
