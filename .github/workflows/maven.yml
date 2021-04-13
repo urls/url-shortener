@@ -26,7 +26,8 @@ jobs:
         distribution: 'adopt'
 
     - name: Build Url Shortener with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn clean install --file pom.xml
+    
     - name: Build Docker Image
-      run: docker build -D Dockerfile -t url-shortener:latest .
+      run: docker build -f Dockerfile -t url-shortener:latest .
     
