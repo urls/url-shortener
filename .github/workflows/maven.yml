@@ -37,4 +37,4 @@ jobs:
         docker build -f Dockerfile -t url-shortener:latest .
     - name: Push the image to Docker hub
       run: | 
-        docker push url-shortener:latest
+        docker push $DOCKER_USERNAME/url-shortener:latest
