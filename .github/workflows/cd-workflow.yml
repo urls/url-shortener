@@ -67,5 +67,5 @@ jobs:
         username: ${{github.actor}}
         password: ${{secrets.DOCKER_PASSWORD}}
         registry: docker.pkg.github.com
-        repository: urls/url-shortener
+        repository: urls/url-shortener/java-url-shortener
         tag_with_sha: true
