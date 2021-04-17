@@ -40,6 +40,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
+      - name: Generate WAR for URL-Shortener
+        run: mvn package
       - name: Build Docker image
         run: docker build -t url-shortener:latest .
       - name: Login to GitHub Packages Docker Registry
