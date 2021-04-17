@@ -10,11 +10,8 @@ jobs:
       - name: mvn install and package
         run: |
           mvn clean install
-          docker-compose up
-      - uses: actions/upload-artifact@master
-        with:
-          name: mvn artifacts
-          path: target/
+      - name: Run Docker Compose
+        run: docker-compose up -d
   test:
     runs-on: ubuntu-latest
     needs: build
@@ -29,10 +26,6 @@ jobs:
         with:
           java-version: ${{ matrix.java-version }}
           distribution: 'adopt'
-      - uses: actions/download-artifact@master
-        with:
-          name: mvn artifacts
-          path: target
       - name: mvn install, and test
         run: |
           mvn install
