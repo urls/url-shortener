@@ -74,4 +74,4 @@ jobs:
       - name: Docker Tag and Push
         run: |
           docker tag url-shortener:latest docker.pkg.github.com/urls/url-shortner/url-shortner:latest
-          docker push docker.pkg.github.com/urls/url-shortner/java:latest
+          docker push docker.pkg.github.com/urls/url-shortner/url-shortener:latest
