@@ -71,3 +71,7 @@ jobs:
           registry: docker.pkg.github.com
           username: amarlearning
           password: ${{ secrets.DOCKER_SECRET }}
+      - name: Docker Tag and Push
+        run: |
+        docker tag url-shortener:latest ghcr.io/urls/url-shortner/url-shortner:latest
+        docker push ghcr.io/urls/url-shortner/url-shortner:latest
