@@ -64,10 +64,10 @@ jobs:
       - name: Build Docker image
         run: docker build -t url-shortener:latest .
       - name: Docker Images Present After Building
-          run: docker images
+        run: docker images
       - name: Login to GitHub Packages Docker Registry
-          uses: docker/login-action@v1
-          with:
-            registry: docker.pkg.github.com
-            username: amarlearning
-            password: ${{ secrets.DOCKER_SECRET }}
+        uses: docker/login-action@v1
+        with:
+          registry: docker.pkg.github.com
+          username: amarlearning
+          password: ${{ secrets.DOCKER_SECRET }}
