@@ -66,4 +66,6 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.DOCKER_SECRET }}
       - name: Docker Tag and Push
-        run: echo ${{ github.repository_owner }}
+        run: |
+          docker tag url-shortener:latest ghcr.io/urls/url-shortener:latest
+          docker push ghcr.io/urls/url-shortener:latest
