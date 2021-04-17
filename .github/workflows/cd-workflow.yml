@@ -10,8 +10,9 @@ jobs:
       - name: mvn install and package
         run: |
           mvn clean install
+          mvn package
       - name: Run Docker Compose
-        run: docker-compose up -d
+        run: docker-compose up --exit-code-from url-shortener
   test:
     runs-on: ubuntu-latest
     needs: build
