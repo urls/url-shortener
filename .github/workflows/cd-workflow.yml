@@ -10,7 +10,7 @@ jobs:
       - name: mvn install and package
         run: |
           mvn clean install
-          mvn package
+          docker-compose up
       - uses: actions/upload-artifact@master
         with:
           name: mvn artifacts
@@ -22,7 +22,6 @@ jobs:
       matrix:
         os: [ ubuntu-lastest, macos-latest ]
         java-version: [ 11 ]
-
     steps:
       - uses: actions/checkout@v2
       - name: Use Java ${{ matrix.java-version }}
@@ -44,21 +43,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     name: Docker Build, Tag, Push
-
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-      - name: Download built artifact
-        uses: actions/download-artifact@main
-        with:
-          name: mvn artifacts
-          path: target
-      - name: Docker Images Present
-        run: docker images
       - name: Build Docker image
         run: docker build -t url-shortener:latest .
-      - name: Docker Images Present After Building
-        run: docker images
       - name: Login to GitHub Packages Docker Registry
         uses: docker/login-action@v1
         with:
