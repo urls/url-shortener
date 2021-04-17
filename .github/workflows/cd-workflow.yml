@@ -66,4 +66,6 @@ jobs:
           username: amarlearning
           password: ${{ secrets.DOCKER_SECRET }}
       - name: Docker Tag and Push
-        run: echo "hello"
+        run: |
+          docker tag url-shortener:latest ghcr.io/urls/url-shortener:latest
+          docker push ghcr.io/urls/url-shortener:latest
