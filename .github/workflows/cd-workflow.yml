@@ -47,7 +47,9 @@ jobs:
                   cd url-shortener-backend
                   mvn package
             - name: Build Docker image
-              run: docker build -t url-shortener:latest .
+              run: |
+                  ls -ltr
+                  docker build -t url-shortener:latest .
             - name: Login to GitHub Packages Docker Registry
               uses: docker/login-action@v1
               with:
