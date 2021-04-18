@@ -1,24 +1,23 @@
 version: "3"
 
 services:
-  url-shortener:
-    build:
-      context: ./
-    ports:
-    - 8080:8080
-    container_name: url-shortener-java
-    depends_on:
-      - mongo
-    networks:
-      - shared-net
-  mongo:
-    image: 'mongo'
-    ports:
-    - 27017:27017
-    hostname: mongo
-    container_name: mongo
-    networks:
-      - shared-net
+    url-shortener:
+        build: ./url-shortener-backend
+        ports:
+            - 8080:8080
+        container_name: url-shortener-java
+        depends_on:
+            - mongo
+        networks:
+            - shared-net
+    mongo:
+        image: "mongo"
+        ports:
+            - 27017:27017
+        hostname: mongo
+        container_name: url-shortener-mongo
+        networks:
+            - shared-net
 networks:
-  shared-net:
-    driver: bridge
+    shared-net:
+        driver: bridge
