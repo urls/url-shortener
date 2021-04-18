@@ -35,7 +35,7 @@ public class UrlShortenerController {
      *
      * @param shortenCode for which the long URL is to be fetched and returned.
      * @param response    {@link HttpServletResponse} to url redirect.
-     * @throws IOException
+     * @throws IOException Throws exception if send redirect url is incorrect.
      */
     @GetMapping(value = "/{SHORTEN_CODE}")
     public void findUrlForGivenShortenCode(@PathVariable("SHORTEN_CODE") final String shortenCode, HttpServletResponse response) throws IOException {
