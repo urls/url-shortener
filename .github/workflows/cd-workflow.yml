@@ -7,11 +7,10 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
-            - name: mvn install and package
+            - name: gradle install and package
               run: |
                   cd url-shortener-backend
-                  mvn clean install
-                  mvn package
+                  ./gradlew clean build
             - name: Run Docker Compose
               run: docker-compose up -d
     test:
@@ -31,8 +30,8 @@ jobs:
             - name: mvn install, and test
               run: |
                   cd url-shortener-backend
-                  mvn install
-                  mvn test
+                  ./gradlew clean
+                  ./gradlew build
               env:
                   CI: true
     Build-and-Push-Docker-Image:
@@ -45,7 +44,7 @@ jobs:
             - name: Generate WAR for URL-Shortener
               run: |
                   cd url-shortener-backend
-                  mvn package
+                  ./gradlew build
             - name: Build Docker image
               run: |
                   cd url-shortener-backend
