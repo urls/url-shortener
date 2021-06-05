@@ -1,8 +1,6 @@
 package me.amarpandey.urlshortener;
 
-import me.amarpandey.urlshortener.models.Url;
 import me.amarpandey.urlshortener.repository.UrlShortenerRepository;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,19 +11,19 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static me.amarpandey.urlshortener.utils.Constants.INVALID_URL;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 class UrlShortenerApplicationTests {
 
-    private final String GET_URL_SHORTEN_ENDPOINT = "/";
     private final String POST_URL_SHORTEN_ENDPOINT = "/shorten";
+    private final String GET_URL_SHORTEN_ENDPOINT = "/{SHORTEN_CODE}";
 
     @Autowired
     private MockMvc mvc;
@@ -39,20 +37,81 @@ class UrlShortenerApplicationTests {
     }
 
     @Test
-    void shouldReturnPaginatedOptionWhenFiltersAreSpecified() throws Exception {
+    void shouldReturnShortenCodeForNewUrl() throws Exception {
         // when
-        var url = "https://facobook.com/";
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post(POST_URL_SHORTEN_ENDPOINT)
-                .contentType(MediaType.TEXT_PLAIN_VALUE)
-                .content(url))
-                .andExpect(status().isOk())
-                .andReturn();
-
-        String responseAsString = mvcResult.getResponse().getContentAsString();
+        var url = "https://github.com/";
+        String responseAsString = generateShortenCodeForGivenUrl(url, status().isOk());
         JSONObject shortenResponse = new JSONObject(responseAsString).getJSONObject("shortenResponse");
 
         // then
         Assertions.assertEquals(url, shortenResponse.get("url"));
         Assertions.assertNotNull(shortenResponse.get("shortenCode"));
+    }
+
+
+    @Test
+    void shouldReturnSameShortenCodeForOldURLs() throws Exception {
+        // when
+        var url = "https://amarpandey.com/";
+        String responseAsString1 = generateShortenCodeForGivenUrl(url, status().isOk());
+        JSONObject shortenResponse1 = new JSONObject(responseAsString1).getJSONObject("shortenResponse");
+
+        // then
+        Assertions.assertEquals(url, shortenResponse1.get("url"));
+        Assertions.assertNotNull(shortenResponse1.get("shortenCode"));
+
+        // when
+        String responseAsString2 = generateShortenCodeForGivenUrl(url, status().isOk());
+        JSONObject shortenResponse2 = new JSONObject(responseAsString2).getJSONObject("shortenResponse");
+
+        // then
+        Assertions.assertEquals(shortenResponse1.get("url"), shortenResponse2.get("url"));
+    }
+
+
+    @Test
+    void shouldReturnErrorResponseForWrongURLs() throws Exception {
+        // when
+        var url = "ThisIsNotAURL";
+        String responseAsString = generateShortenCodeForGivenUrl(url, status().isBadRequest());
+        String shortenResponse = new JSONObject(responseAsString).getString("message");
+
+        // then
+        Assertions.assertEquals(INVALID_URL, shortenResponse);
+    }
+
+
+    @Test
+    void shouldRedirectToLongURLForValidShortenCode() throws Exception {
+
+        // given
+        String responseAsString = generateShortenCodeForGivenUrl("http://mongodb.com", status().isOk());
+        JSONObject shortenResponse = new JSONObject(responseAsString).getJSONObject("shortenResponse");
+
+        mvc.perform(get(GET_URL_SHORTEN_ENDPOINT, shortenResponse.get("shortenCode")))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl((String) shortenResponse.get("url")))
+                .andReturn();
+
+
+    }
+
+    @Test
+    void shouldRedirectToRootURLForInvalidShortenCode() throws Exception {
+        mvc.perform(get(GET_URL_SHORTEN_ENDPOINT, "SomeRandomCode"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/"))
+                .andReturn();
+    }
+
+
+    private String generateShortenCodeForGivenUrl(String url, ResultMatcher matcher) throws Exception {
+        MvcResult mvcResult = mvc.perform(post(POST_URL_SHORTEN_ENDPOINT)
+                .contentType(MediaType.TEXT_PLAIN_VALUE)
+                .content(url))
+                .andExpect(matcher)
+                .andReturn();
+
+        return mvcResult.getResponse().getContentAsString();
     }
 }
