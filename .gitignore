@@ -35,3 +35,6 @@ build/
 ### MongoDB ###
 url-shortener-db/diagnostic.data/
 url-shortener-db/journal/
+
+### Gradle ###
+url-shortener-backend/.gradle/
