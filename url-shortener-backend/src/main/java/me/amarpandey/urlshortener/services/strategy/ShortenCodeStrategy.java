@@ -1,4 +1,4 @@
-package me.amarpandey.urlshortener.models.strategy;
+package me.amarpandey.urlshortener.services.strategy;
 
 public interface ShortenCodeStrategy {
     String generateCode();

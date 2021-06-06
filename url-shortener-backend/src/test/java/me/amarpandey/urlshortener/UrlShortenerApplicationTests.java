@@ -12,17 +12,17 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultMatcher;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static me.amarpandey.urlshortener.utils.Constants.INVALID_URL;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 class UrlShortenerApplicationTests {
 
-    private final String POST_URL_SHORTEN_ENDPOINT = "/shorten";
     private final String GET_URL_SHORTEN_ENDPOINT = "/{SHORTEN_CODE}";
 
     @Autowired
@@ -106,6 +106,7 @@ class UrlShortenerApplicationTests {
 
 
     private String generateShortenCodeForGivenUrl(String url, ResultMatcher matcher) throws Exception {
+        String POST_URL_SHORTEN_ENDPOINT = "/shorten";
         MvcResult mvcResult = mvc.perform(post(POST_URL_SHORTEN_ENDPOINT)
                 .contentType(MediaType.TEXT_PLAIN_VALUE)
                 .content(url))

@@ -1,4 +1,4 @@
-package me.amarpandey.urlshortener.models;
+package me.amarpandey.urlshortener.entity;
 
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
@@ -13,15 +13,15 @@ public class Url {
 
     @Id
     private String id;
-    private String url;
+    private final String longUrl;
 
     @Indexed(unique = true)
     private String shorthand;
 
     private LocalDateTime localDateTime;
 
-    public Url(String url, String shorthand, LocalDateTime localDateTime) {
-        this.url = url;
+    public Url(String longUrl, String shorthand, LocalDateTime localDateTime) {
+        this.longUrl = longUrl;
         this.shorthand = shorthand;
         this.localDateTime = localDateTime;
     }

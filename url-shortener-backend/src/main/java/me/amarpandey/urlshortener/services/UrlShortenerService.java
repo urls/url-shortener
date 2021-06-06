@@ -2,8 +2,8 @@ package me.amarpandey.urlshortener.services;
 
 import io.vavr.control.Either;
 import lombok.NonNull;
-import me.amarpandey.urlshortener.models.Url;
-import me.amarpandey.urlshortener.models.strategy.ShortenCodeStrategy;
+import me.amarpandey.urlshortener.entity.Url;
+import me.amarpandey.urlshortener.services.strategy.ShortenCodeStrategy;
 import me.amarpandey.urlshortener.repository.UrlShortenerRepository;
 import me.amarpandey.urlshortener.utils.Constants;
 import me.amarpandey.urlshortener.validators.UrlValidator;
@@ -51,7 +51,7 @@ public class UrlShortenerService {
     public String findUrlForGivenShortenCode(@NonNull final String shortenCode) {
         Url url = this.urlShortenerRepository.findByShorthand(shortenCode);
         if (url == null) return Constants.INVALID_SHORTHAND_CODE;
-        return url.getUrl();
+        return url.getLongUrl();
     }
 
     /**

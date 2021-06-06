@@ -1,6 +1,6 @@
 package me.amarpandey.urlshortener.repository;
 
-import me.amarpandey.urlshortener.models.Url;
+import me.amarpandey.urlshortener.entity.Url;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
