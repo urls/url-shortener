@@ -11,12 +11,11 @@ services:
         networks:
             - shared-net
     mongo:
-        image: "mongo"
+        build: ./url-shortener-db
         ports:
             - 27017:27017
         volumes:
-            - ./url-shortener-db:/data/db/
-        hostname: mongo
+            - ./url-shortener-db/data:/data/db/
         container_name: url-shortener-mongo
         networks:
             - shared-net
