@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UrlShortenerRepository extends MongoRepository<Url, String> {
 
-    @Query("{'url' : ?0}")
+    @Query("{'longUrl' : ?0}")
     Url findByUrl(String longUrl);
 
     @Query("{'shorthand' : ?0}")

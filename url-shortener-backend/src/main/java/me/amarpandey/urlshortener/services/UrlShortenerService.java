@@ -79,9 +79,6 @@ public class UrlShortenerService {
      */
     private boolean isUrlAlreadyShortened(final String longURL) {
         Url url = this.urlShortenerRepository.findByUrl(longURL);
-        if (url != null) {
-            return true;
-        }
-        return false;
+        return url != null;
     }
 }

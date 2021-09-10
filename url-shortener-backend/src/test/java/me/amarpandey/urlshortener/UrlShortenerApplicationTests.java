@@ -41,7 +41,7 @@ class UrlShortenerApplicationTests {
         // when
         var url = "https://github.com/";
         String responseAsString = generateShortenCodeForGivenUrl(url, status().isOk());
-        JSONObject shortenResponse = new JSONObject(responseAsString).getJSONObject("shortenResponse");
+        JSONObject shortenResponse = new JSONObject(responseAsString);
 
         // then
         Assertions.assertEquals(url, shortenResponse.get("url"));
@@ -54,7 +54,7 @@ class UrlShortenerApplicationTests {
         // when
         var url = "https://amarpandey.com/";
         String responseAsString1 = generateShortenCodeForGivenUrl(url, status().isOk());
-        JSONObject shortenResponse1 = new JSONObject(responseAsString1).getJSONObject("shortenResponse");
+        JSONObject shortenResponse1 = new JSONObject(responseAsString1);
 
         // then
         Assertions.assertEquals(url, shortenResponse1.get("url"));
@@ -62,7 +62,7 @@ class UrlShortenerApplicationTests {
 
         // when
         String responseAsString2 = generateShortenCodeForGivenUrl(url, status().isOk());
-        JSONObject shortenResponse2 = new JSONObject(responseAsString2).getJSONObject("shortenResponse");
+        JSONObject shortenResponse2 = new JSONObject(responseAsString2);
 
         // then
         Assertions.assertEquals(shortenResponse1.get("url"), shortenResponse2.get("url"));
@@ -86,7 +86,7 @@ class UrlShortenerApplicationTests {
 
         // given
         String responseAsString = generateShortenCodeForGivenUrl("http://mongodb.com", status().isOk());
-        JSONObject shortenResponse = new JSONObject(responseAsString).getJSONObject("shortenResponse");
+        JSONObject shortenResponse = new JSONObject(responseAsString);
 
         mvc.perform(get(GET_URL_SHORTEN_ENDPOINT, shortenResponse.get("shortenCode")))
                 .andExpect(status().is3xxRedirection())

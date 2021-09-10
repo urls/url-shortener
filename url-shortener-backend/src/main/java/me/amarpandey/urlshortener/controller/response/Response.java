@@ -7,16 +7,19 @@ import lombok.Getter;
 @Getter
 @JsonInclude(Include.NON_NULL)
 public class Response {
+    private String url;
     private String message;
-    private UrlShortenResponse shortenResponse;
+    private String shortenCode;
 
     public Response(String message) {
+        this.url = null;
         this.message = message;
-        this.shortenResponse = null;
+        this.shortenCode = null;
     }
 
-    public Response(UrlShortenResponse shortenResponse) {
+    public Response(String url, String shortenCode) {
+        this.url = url;
         this.message = null;
-        this.shortenResponse = shortenResponse;
+        this.shortenCode = shortenCode;
     }
 }

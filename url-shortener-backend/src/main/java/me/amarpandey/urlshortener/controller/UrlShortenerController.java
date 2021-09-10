@@ -3,7 +3,6 @@ package me.amarpandey.urlshortener.controller;
 
 import io.vavr.control.Either;
 import me.amarpandey.urlshortener.controller.response.Response;
-import me.amarpandey.urlshortener.controller.response.UrlShortenResponse;
 import me.amarpandey.urlshortener.services.UrlShortenerService;
 import me.amarpandey.urlshortener.validators.UrlValidator;
 import org.springframework.http.HttpStatus;
@@ -41,7 +40,6 @@ public class UrlShortenerController {
             return new ResponseEntity<>(new Response(either.getLeft()), HttpStatus.BAD_REQUEST);
         }
 
-        UrlShortenResponse shortenResponse = new UrlShortenResponse(url, either.get());
-        return new ResponseEntity<>(new Response(shortenResponse), HttpStatus.OK);
+        return new ResponseEntity<>(new Response(url, either.get()), HttpStatus.OK);
     }
 }
