@@ -1,12 +1,8 @@
 ### Steps to run mongodb
 
-1. Build the docker image
+1. Start the docker container
     ```
-    # docker build -f Dockerfile -t mongo .
-    ```
-2. Spin up the docker container
-    ```
-    # docker run --name mongo -p 27017:27017 -v data:/data/db mongo
+    # docker run --name mongo -p 27017:27017 -v data:/data/db mongo:latest
     ```
 
-> Note: run both command inside the `url-shortener-db` directory.
+> Note: run command inside the `url-shortener-db` directory.

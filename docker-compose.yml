@@ -11,7 +11,7 @@ services:
         networks:
             - shared-net
     mongo:
-        build: ./url-shortener-db
+        image: "mongo:latest"
         ports:
             - 27017:27017
         volumes:
