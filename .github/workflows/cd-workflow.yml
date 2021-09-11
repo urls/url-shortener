@@ -11,8 +11,6 @@ jobs:
               run: |
                   cd url-shortener-backend
                   ./gradlew clean build --info
-            - name: Run Docker Compose
-              run: docker-compose up -d
     test:
         runs-on: ubuntu-latest
         needs: build
