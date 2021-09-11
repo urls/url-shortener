@@ -3,15 +3,22 @@ package me.amarpandey.urlshortener;
 import me.amarpandey.urlshortener.repository.UrlShortenerRepository;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultMatcher;
+import org.testcontainers.containers.MongoDBContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.utility.DockerImageName;
 
 import static me.amarpandey.urlshortener.utils.Constants.INVALID_URL;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -19,11 +26,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Testcontainers
 @SpringBootTest
 @AutoConfigureMockMvc
 class UrlShortenerApplicationTests {
 
     private final String GET_URL_SHORTEN_ENDPOINT = "/{SHORTEN_CODE}";
+
+    @Container
+    static final MongoDBContainer mongoDBContainer = new MongoDBContainer(DockerImageName.parse("mongo:latest"));
 
     @Autowired
     private MockMvc mvc;
@@ -31,9 +42,19 @@ class UrlShortenerApplicationTests {
     @Autowired
     private UrlShortenerRepository urlShortenerRepository;
 
+    @BeforeAll
+    static void beforeAll() {
+        mongoDBContainer.start();
+    }
+
     @BeforeEach
     void setup() {
         urlShortenerRepository.deleteAll();
+    }
+
+    @DynamicPropertySource
+    static void mongoDbProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.data.mongodb.uri", mongoDBContainer::getReplicaSetUrl);
     }
 
     @Test
@@ -108,8 +129,8 @@ class UrlShortenerApplicationTests {
     private String generateShortenCodeForGivenUrl(String url, ResultMatcher matcher) throws Exception {
         String POST_URL_SHORTEN_ENDPOINT = "/shorten";
         MvcResult mvcResult = mvc.perform(post(POST_URL_SHORTEN_ENDPOINT)
-                .contentType(MediaType.TEXT_PLAIN_VALUE)
-                .content(url))
+                        .contentType(MediaType.TEXT_PLAIN_VALUE)
+                        .content(url))
                 .andExpect(matcher)
                 .andReturn();
 
