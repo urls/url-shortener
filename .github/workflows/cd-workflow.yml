@@ -10,7 +10,7 @@ jobs:
             - name: gradle install and package
               run: |
                   cd url-shortener-backend
-                  ./gradlew clean build
+                  ./gradlew clean build --info
             - name: Run Docker Compose
               run: docker-compose up -d
     test:
