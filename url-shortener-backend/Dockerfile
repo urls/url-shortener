@@ -4,7 +4,7 @@ WORKDIR /url-shortener-backend
 
 COPY . ./
 
-RUN gradle build
+RUN gradle build -x test
 
 EXPOSE 8080
 
