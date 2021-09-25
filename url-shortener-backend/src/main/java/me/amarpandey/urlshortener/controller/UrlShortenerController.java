@@ -23,9 +23,9 @@ public class UrlShortenerController {
     }
 
 
-    @GetMapping(value = "/{SHORTEN_CODE}")
+    @GetMapping(value = "/{shorten_code}")
     public void findUrlForGivenShortenCode(
-            @PathVariable(required = true, value = "SHORTEN_CODE") final String shortenCode,
+            @PathVariable(required = true, value = "shorten_code") final String shortenCode,
             HttpServletResponse response) throws IOException {
         String result = this.urlShortenerService.findUrlForGivenShortenCode(shortenCode);
         response.sendRedirect(UrlValidator.isValidUrl(result) ? result : "/");
