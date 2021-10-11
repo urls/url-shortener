@@ -18,7 +18,7 @@ public class UrlValidatorUtil {
     }
 
     public static boolean urlValidator(String url)    {
-        UrlValidator defaultValidator = new org.apache.commons.validator.routines.UrlValidator();
+        UrlValidator defaultValidator = new UrlValidator();
         return defaultValidator.isValid(url);
     }
 
