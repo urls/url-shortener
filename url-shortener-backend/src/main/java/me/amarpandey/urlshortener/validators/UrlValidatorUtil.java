@@ -4,9 +4,10 @@ import org.apache.commons.validator.routines.UrlValidator;
 
 public class UrlValidatorUtil {
 
-    public static boolean isValidUrl(String url) {
+    public static boolean isValid(String url) {
         try {
-            if (urlValidator(url)) {
+            UrlValidator defaultValidator = new UrlValidator();
+            if (defaultValidator.isValid(url)) {
                 return true;
             } else {
                 return false;
@@ -15,11 +16,6 @@ public class UrlValidatorUtil {
         catch (Exception e){
             return false;
         }
-    }
-
-    public static boolean urlValidator(String url)    {
-        UrlValidator defaultValidator = new UrlValidator();
-        return defaultValidator.isValid(url);
     }
 
 }

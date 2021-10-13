@@ -24,6 +24,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web:2.5.4'
     implementation 'io.vavr:vavr:0.10.4'
     implementation 'org.springdoc:springdoc-openapi-ui:1.5.10'
+    implementation 'commons-validator:commons-validator:1.7'
     compileOnly 'org.projectlombok:lombok:1.18.20'
     developmentOnly 'org.springframework.boot:spring-boot-devtools:2.5.4'
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
@@ -31,7 +32,6 @@ dependencies {
     testImplementation 'org.testcontainers:testcontainers:1.16.0'
     testImplementation 'org.testcontainers:junit-jupiter:1.16.0'
     testImplementation 'org.testcontainers:mongodb:1.16.0'
-    implementation 'commons-validator:commons-validator:1.7'
 }
 
 test {

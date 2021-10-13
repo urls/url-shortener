@@ -31,7 +31,7 @@ public class UrlShortenerService {
      */
     public Either<String, String> returnShortenCode(@NonNull final String longURL) {
 
-        if (!UrlValidatorUtil.isValidUrl(longURL)) {
+        if (!UrlValidatorUtil.isValid(longURL)) {
             return Either.left(Constants.INVALID_URL);
         }
 
