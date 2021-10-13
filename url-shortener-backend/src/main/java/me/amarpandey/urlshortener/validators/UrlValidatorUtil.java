@@ -7,11 +7,7 @@ public class UrlValidatorUtil {
     public static boolean isValid(String url) {
         try {
             UrlValidator defaultValidator = new UrlValidator();
-            if (defaultValidator.isValid(url)) {
-                return true;
-            } else {
-                return false;
-            }
+            return defaultValidator.isValid(url);
         }
         catch (Exception e){
             return false;
