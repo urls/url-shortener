@@ -6,7 +6,7 @@ import me.amarpandey.urlshortener.entity.Url;
 import me.amarpandey.urlshortener.services.strategy.ShortenCodeStrategy;
 import me.amarpandey.urlshortener.repository.UrlShortenerRepository;
 import me.amarpandey.urlshortener.utils.Constants;
-import me.amarpandey.urlshortener.validators.UrlValidator;
+import me.amarpandey.urlshortener.validators.UrlValidatorUtil;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -31,13 +31,12 @@ public class UrlShortenerService {
      */
     public Either<String, String> returnShortenCode(@NonNull final String longURL) {
 
-        if (!UrlValidator.isValidUrl(longURL)) {
+        if (!UrlValidatorUtil.isValid(longURL)) {
             return Either.left(Constants.INVALID_URL);
         }
 
-        String shortenCode = isUrlAlreadyShortened(longURL) ?
-                this.urlShortenerRepository.findByUrl(longURL).getShorthand() :
-                createShortenUrl(longURL);
+        Url shortenUrl = getUrlIfAlreadyShortened(longURL);
+        String shortenCode = (shortenUrl != null) ? shortenUrl.getShorthand() : createShortenUrl(longURL);
 
         return Either.right(shortenCode);
     }
@@ -75,10 +74,9 @@ public class UrlShortenerService {
      * Helper method to validate whether the URL had been shortened before or not by system.
      *
      * @param longURL String Long URL
-     * @return Boolean indicating whether URL is shortened before or not.
+     * @return Url if the Long URL is shortened before, else null.
      */
-    private boolean isUrlAlreadyShortened(final String longURL) {
-        Url url = this.urlShortenerRepository.findByUrl(longURL);
-        return url != null;
+    private Url getUrlIfAlreadyShortened(final String longURL) {
+        return this.urlShortenerRepository.findByUrl(longURL);
     }
 }

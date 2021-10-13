@@ -101,6 +101,17 @@ class UrlShortenerApplicationTests {
         Assertions.assertEquals(INVALID_URL, shortenResponse);
     }
 
+    @Test
+    void shouldReturnErrorResponseForSneakyURLs() throws Exception {
+        // when
+        var url = "https://.com";
+        String responseAsString = generateShortenCodeForGivenUrl(url, status().isBadRequest());
+        String shortenResponse = new JSONObject(responseAsString).getString("message");
+
+        // then
+        Assertions.assertEquals(INVALID_URL, shortenResponse);
+    }
+
 
     @Test
     void shouldRedirectToLongURLForValidShortenCode() throws Exception {

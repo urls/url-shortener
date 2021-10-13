@@ -4,7 +4,7 @@ package me.amarpandey.urlshortener.controller;
 import io.vavr.control.Either;
 import me.amarpandey.urlshortener.controller.response.Response;
 import me.amarpandey.urlshortener.services.UrlShortenerService;
-import me.amarpandey.urlshortener.validators.UrlValidator;
+import me.amarpandey.urlshortener.validators.UrlValidatorUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +28,7 @@ public class UrlShortenerController {
             @PathVariable(required = true, value = "shorten_code") final String shortenCode,
             HttpServletResponse response) throws IOException {
         String result = this.urlShortenerService.findUrlForGivenShortenCode(shortenCode);
-        response.sendRedirect(UrlValidator.isValidUrl(result) ? result : "/");
+        response.sendRedirect(UrlValidatorUtil.isValid(result) ? result : "/");
     }
 
 
