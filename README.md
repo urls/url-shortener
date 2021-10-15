@@ -13,7 +13,7 @@ A modern, minimalist, and lightweight URL shortener application.
 1. Start the mongo container for database using docker:
 
     ```
-    docker run --name mongo -p 27017:27017 -v .local/data:/data/db mongo:latest
+    docker run --name mongo -p 27017:27017 -v $(pwd)/.local/data:/data/db mongo:latest
     ```
 
 2. Start the `url-shortener-backend`:
@@ -21,6 +21,8 @@ A modern, minimalist, and lightweight URL shortener application.
     cd url-shortener-backend
     ./gradlew bootRun
     ```
+
+> Note: You can also run the backend using any IDE.
 
 ### Alternatively, run application using docker-compose:
 
