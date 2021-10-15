@@ -15,7 +15,7 @@ services:
         ports:
             - "27017:27017"
         volumes:
-            - ./url-shortener-db/data:/data/db/
+            - .local/data:/data/db/
         container_name: url-shortener-mongo
         networks:
             - shared-net

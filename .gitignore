@@ -33,7 +33,7 @@ build/
 .vscode/
 
 ### MongoDB ###
-url-shortener-db/data
+.local
 
 ### Gradle ###
 url-shortener-backend/.gradle

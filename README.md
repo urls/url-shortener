@@ -2,13 +2,44 @@
 
 [![URL Shortener Docker CD](https://github.com/urls/url-shortner/actions/workflows/cd-workflow.yml/badge.svg?branch=master)](https://github.com/urls/url-shortner/actions/workflows/cd-workflow.yml)
 
-Prerequisites:
+A modern, minimalist, and lightweight URL shortener application.
 
-1. Docker
+---
 
-Run this project using docker-compose : `docker-compose up`
+## Setup
 
-To get the backend and db separately refer the following:
+### For devlopment:
 
-1.  [DB README](./url-shortener-db/readme.md)
-2.  [Backend README](./url-shortener-backend/README.md)
+1. Start the mongo container for database using docker:
+
+    ```
+    docker run --name mongo -p 27017:27017 -v .local/data:/data/db mongo:latest
+    ```
+
+2. Start the `url-shortener-backend`:
+    ```
+    cd url-shortener-backend
+    ./gradlew bootRun
+    ```
+
+### Alternatively, run application using docker-compose:
+
+```
+docker-compose up --build
+```
+
+---
+
+## Issues
+
+You can report the bugs at the [issue tracker](https://github.com/urls/url-shortener/issues)
+
+**OR**
+
+You can [tweet me](https://twitter.com/iamarpandey) if you can't get it to work. In fact, you should tweet me anyway.
+
+---
+
+## License
+
+Built with ♥ by awesome [people](https://github.com/urls/url-shortener/graphs/contributors) under [MIT License](LICENSE)
