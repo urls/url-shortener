@@ -1,0 +1,39 @@
+name: URL Shortener CI using Gradle
+
+on:
+  push:
+    branches:
+      - 'master'
+  pull_request:
+    branches:
+      - 'master' 
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - name: gradle install and package
+              run: |
+                  cd url-shortener-backend
+                  ./gradlew build
+    test:
+      runs-on: ubuntu-latest
+      needs: build
+      strategy:
+          matrix:
+              os: [ubuntu-lastest, macos-latest]
+              java-version: [11]
+      steps:
+          - uses: actions/checkout@v2
+          - name: Use Java ${{ matrix.java-version }}
+            uses: actions/setup-java@v2
+            with:
+                java-version: ${{ matrix.java-version }}
+                distribution: "adopt"
+          - name: gradle test
+            run: |
+                cd url-shortener-backend
+                ./gradlew test
+            env:
+                CI: true
