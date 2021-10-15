@@ -2,7 +2,7 @@
 
 [![URL Shortener Docker CD](https://github.com/urls/url-shortner/actions/workflows/ci-workflow.yml/badge.svg?branch=master)](https://github.com/urls/url-shortner/actions/workflows/ci-workflow.yml)
 
-A modern, minimalist, and lightweight URL shortener application.
+A modern, minimalist, and lightweight URL shortener application in test branch
 
 ---
 
