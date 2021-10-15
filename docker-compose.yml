@@ -4,7 +4,7 @@ services:
     url-shortener:
         build: ./url-shortener-backend
         ports:
-            - 8080:8080
+            - "8080:8080"
         container_name: url-shortener-java
         depends_on:
             - mongo
@@ -13,7 +13,7 @@ services:
     mongo:
         image: "mongo:latest"
         ports:
-            - 27017:27017
+            - "27017:27017"
         volumes:
             - ./url-shortener-db/data:/data/db/
         container_name: url-shortener-mongo
